@@ -133,55 +133,10 @@ def main():
         samples_file.write("聊天记录{}:\n".format(datetime.now()))
     # 存储聊天记录，每个utterance以token的id的形式进行存储
     history = []
-    print('开始和chatbot聊天，输入CTRL + Z以退出')
+    print('开始和chatbot聊天')
     app.run(host='127.0.0.1', port=5000, debug=True)
-    
-    while True:
-        try:
-            text = input("user:")
-            # text = "你好"
-            if args.save_samples_path:
-                samples_file.write("user:{}\n".format(text))
-            text_ids = tokenizer.encode(text, add_special_tokens=False)
-            history.append(text_ids)
-            input_ids = [tokenizer.cls_token_id]  # 每个input以[CLS]为开头
-
-            for history_id, history_utr in enumerate(history[-args.max_history_len:]):
-                input_ids.extend(history_utr)
-                input_ids.append(tokenizer.sep_token_id)
-            input_ids = torch.tensor(input_ids).long().to(device)
-            input_ids = input_ids.unsqueeze(0)
-            response = []  # 根据context，生成的response
-            # 最多生成max_len个token
-            for _ in range(args.max_len):
-                outputs = model(input_ids=input_ids)
-                logits = outputs.logits
-                next_token_logits = logits[0, -1, :]
-                # 对于已生成的结果generated中的每个token添加一个重复惩罚项，降低其生成概率
-                for id in set(response):
-                    next_token_logits[id] /= args.repetition_penalty
-                next_token_logits = next_token_logits / args.temperature
-                # 对于[UNK]的概率设为无穷小，也就是说模型的预测结果不可能是[UNK]这个token
-                next_token_logits[tokenizer.convert_tokens_to_ids('[UNK]')] = -float('Inf')
-                filtered_logits = top_k_top_p_filtering(next_token_logits, top_k=args.topk, top_p=args.topp)
-                # torch.multinomial表示从候选集合中无放回地进行抽取num_samples个元素，权重越高，抽到的几率越高，返回元素的下标
-                next_token = torch.multinomial(F.softmax(filtered_logits, dim=-1), num_samples=1)
-                if next_token == tokenizer.sep_token_id:  # 遇到[SEP]则表明response生成结束
-                    break
-                response.append(next_token.item())
-                input_ids = torch.cat((input_ids, next_token.unsqueeze(0)), dim=1)
-                # his_text = tokenizer.convert_ids_to_tokens(curr_input_tensor.tolist())
-                # print("his_text:{}".format(his_text))
-            history.append(response)
-            text = tokenizer.convert_ids_to_tokens(response)
-            print("chatbot:" + "".join(text))
-            if args.save_samples_path:
-                samples_file.write("chatbot:{}\n".format("".join(text)))
-        except KeyboardInterrupt:
-            if args.save_samples_path:
-                samples_file.close()
-            break
-
-
+    # while True:
+    # text = input('user')
+    # print(main(text))
 if __name__ == '__main__':
     main()
