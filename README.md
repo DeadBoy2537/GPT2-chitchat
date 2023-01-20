@@ -5,3 +5,5 @@
 https://github.com/yangjianxin1/GPT2-chitchat
 
 https://github.com/OVOU4/zhenxunbot_GPT-2
+
+该项目进行了部分内容的整合
