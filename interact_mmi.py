@@ -140,7 +140,8 @@ def main():
         # 存储聊天记录，每个utterance以token的id的形式进行存储
     history = []
     print('开始和chatbot聊天，输入CTRL + Z以退出')
-
+    app.run(host='127.0.0.1', port=5000, debug=True)
+    
     while True:
         try:
             text = input("user:")
