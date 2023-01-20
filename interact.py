@@ -22,6 +22,10 @@ from torch.nn import CrossEntropyLoss
 from sklearn.model_selection import train_test_split
 import torch.nn.functional as F
 
+from flask import Flask, request, jsonify
+
+app = Flask(__name__)
+
 PAD = '[PAD]'
 pad_id = 0
 
