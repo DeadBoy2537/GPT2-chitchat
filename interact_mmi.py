@@ -22,6 +22,10 @@ from train_origin import create_model
 import torch.nn.functional as F
 import copy
 
+from flask import Flask, request, jsonify
+
+app = Flask(__name__)
+
 PAD = '[PAD]'
 pad_id = 0
 
