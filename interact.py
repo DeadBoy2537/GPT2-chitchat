@@ -112,6 +112,18 @@ def top_k_top_p_filtering(logits, top_k=0, top_p=0.0, filter_value=-float('Inf')
         logits[indices_to_remove] = filter_value
     return logits
 
+@app.route("/", methods=["GET", 'POST'])
+def hello_world():
+    if request.method == 'POST':
+        print('文本生成暂不支持图片和视频请求')
+        return
+    try:
+        key_word = request.args.get("key_word")
+        x = main(key_word)
+        print('问:',key_word,'答:',x)
+        return x
+    except Exception:
+        return '我不知道你在说什么'
 
 def main():
     args = set_args()
