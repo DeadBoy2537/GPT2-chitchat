@@ -51,6 +51,9 @@ def set_args():
     parser.add_argument('--max_len', type=int, default=25, help='每个utterance的最大长度,超过指定长度则进行截断')
     parser.add_argument('--max_history_len', type=int, default=3, help="dialogue history的最大长度")
     parser.add_argument('--no_cuda', action='store_true', help='不使用GPU进行预测')
+    parser.add_argument('--host', type=str, default='127.0.0.1', help='地址')
+    parser.add_argument('--port', type=int, default=5000, help='端口')
+    parser.add_argument('--debug', action='store_true', help='Flask的Debug')
     return parser.parse_args()
 
 
@@ -193,7 +196,7 @@ if __name__ == '__main__':
     # 存储聊天记录，每个utterance以token的id的形式进行存储
     history = []
     print('启动GPT2')
-    app.run(host='127.0.0.1', port=5000, debug=True)
+    app.run(host=args.host, port=args.port, debug=args.debug)
     # while True:
     # text = input('user')
     # print(main(text))
