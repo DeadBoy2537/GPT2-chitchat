@@ -10,6 +10,8 @@ https://github.com/OVOU4/zhenxunbot_GPT-2
 
 配套使用的插件: https://github.com/Mira-LeafTown/zhenxun_bot_gpt2_ai
 
+用文爱词库训练的一个模型: https://huggingface.co/Mira-LeafTown/GPT-2-Chinese-AnimeThesaurus (数据集来自: https://github.com/Kyomotoi/AnimeThesaurus)
+
 ## News
 公众号【YeungNLP】
 - 2023.04.05：发布[Firefly(流萤): 中文对话式大语言模型](https://github.com/yangjianxin1/Firefly) ，开源1.1M中文多任务指令数据集，以及模型权重。详情见[文章](https://mp.weixin.qq.com/s/TX7wj8IzD_EaMTvk0bjRtA)
